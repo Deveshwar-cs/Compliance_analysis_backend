@@ -47,7 +47,7 @@ export const signin = async (req, res) => {
     }
 
     // Token generation
-    const token = generateToken(user._id, user.userName);
+    const token = generateToken(user._id, user.userName, user.role);
     res
       .cookie("token", token, {
         httpOnly: true,

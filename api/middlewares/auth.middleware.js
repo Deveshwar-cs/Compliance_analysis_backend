@@ -23,3 +23,16 @@ const protect = async (req, res, next) => {
 };
 
 export default protect;
+
+export const isAdmin = async (req, res, next) => {
+  try {
+    if (req.user.role !== "admin") {
+      return res.status(403).json({
+        message: "Access Denied",
+      });
+    }
+    next();
+  } catch (err) {
+    res.satus(500).json({messsage: err.message});
+  }
+};
