@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-const protect = async (req, res, next) => {
+export const protect = async (req, res, next) => {
   try {
     const token = req.cookies.token;
     if (!token) {
@@ -7,12 +7,13 @@ const protect = async (req, res, next) => {
         message: "Unauthorized",
       });
     }
-    const decoded = jwt.decode(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     if (!decoded) {
       return res.status(400).json({
         messsage: "Invalid Token",
       });
     }
+
     req.user = decoded;
     next();
   } catch (error) {
@@ -33,6 +34,18 @@ export const isAdmin = async (req, res, next) => {
     }
     next();
   } catch (err) {
-    res.satus(500).json({messsage: err.message});
+    res.status(500).json({messsage: err.message});
+  }
+};
+export const isUser = async (req, res, next) => {
+  try {
+    if (req.user.role !== "user") {
+      return res.status(403).json({
+        message: "Access Denied",
+      });
+    }
+    next();
+  } catch (err) {
+    res.status(500).json({messsage: err.message});
   }
 };

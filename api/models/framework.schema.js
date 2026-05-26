@@ -50,7 +50,14 @@ const frameworkSchema = new mongoose.Schema(
           enum: ["low", "medium", "high"],
           default: "medium",
         },
+        weight: {
+          type: Number,
+          default: 10,
+        },
         tags: [String],
+        applicableTo: [String],
+        productTypes: [String],
+        industries: [String],
       },
     ],
     isActive: {

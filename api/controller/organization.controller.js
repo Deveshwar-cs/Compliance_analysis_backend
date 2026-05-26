@@ -58,7 +58,6 @@ export const getAllCompanies = async (req, res, next) => {
         message: "No Company Available",
       });
     }
-
     return res.status(200).json({data: companies});
   } catch (err) {
     res.status(500).json({message: err.message});

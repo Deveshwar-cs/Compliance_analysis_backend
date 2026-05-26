@@ -7,6 +7,6 @@ import protect from "../middlewares/auth.middleware.js";
 
 const router = express.Router();
 router.post("/create", protect, createOrganization);
-router.post("/get-companies", getAllCompanies);
+router.get("/get-companies", getAllCompanies);
 
 export default router;

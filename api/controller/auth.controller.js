@@ -58,11 +58,45 @@ export const signin = async (req, res) => {
       .status(200)
       .json({
         message: "Login successfully",
-        data: user._id,
+        data: {
+          _id: user._id,
+          name: user.userName,
+          role: user.role,
+        },
       });
   } catch (error) {
     res.status(500).json({
       message: error.message,
+    });
+  }
+};
+
+export const getuser = async (req, res) => {
+  try {
+    //  get user
+    const user = await Auth.findById(req.user.id).select("-password");
+    if (!user) {
+      return res.status(400).json({
+        message: "User not found",
+      });
+    }
+    return res.status(200).json(user);
+  } catch (err) {
+    return res.status(500).json({
+      message: err.message,
+    });
+  }
+};
+
+export const signout = async (req, res) => {
+  try {
+    //  signout
+    res.clearCookie("token").status(200).json({
+      message: "Signout successfully",
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: err.message,
     });
   }
 };
