@@ -16,6 +16,8 @@ connectDB();
 
 const app = express();
 
+app.set("trust proxy", 1);
+
 await connectQdrant();
 
 //middleware
@@ -25,8 +27,8 @@ app.use(
       "http://localhost:5173",
       "https://compliance-analysis-frontend-git-main-logic-lords.vercel.app",
     ],
-    methods: ["GET", "PUT", "POST", "PATCH", "DELETE"],
     credentials: true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   }),
 );
 app.use(express.json());
