@@ -8,7 +8,6 @@ const storage = new CloudinaryStorage({
     return {
       folder: "compliance_analysis",
       resource_type: "auto",
-      format: file.mimetype.split("/")[1],
       public_id: Date.now() + "-" + file.originalname,
     };
   },
