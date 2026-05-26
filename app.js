@@ -20,11 +20,19 @@ await connectQdrant();
 
 //middleware
 app.use(
-  cors({
-    origin: "http://localhost:5173", // your frontend URL
-    methods: ["GET", "PUT", "POST", "PATCH", "DELETE"],
-    credentials: true,
-  }),
+  cors(
+    {
+      origin: "http://localhost:5173", // your frontend URL
+      methods: ["GET", "PUT", "POST", "PATCH", "DELETE"],
+      credentials: true,
+    },
+    {
+      origin:
+        "https://compliance-analysis-frontend-git-main-logic-lords.vercel.app/signin", // your frontend URL
+      methods: ["GET", "PUT", "POST", "PATCH", "DELETE"],
+      credentials: true,
+    },
+  ),
 );
 app.use(express.json());
 app.use(cookieParser());
