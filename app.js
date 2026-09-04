@@ -26,6 +26,7 @@ app.use(
     origin: [
       "http://localhost:5173",
       "https://compliance-analysis-frontend-git-main-logic-lords.vercel.app",
+      "https://compliance-analysis-frontend.vercel.app",
     ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
