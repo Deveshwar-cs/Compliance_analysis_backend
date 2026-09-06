@@ -4,7 +4,7 @@ import {Auth} from "../models/auth.schema.js";
 
 // ======================
 // SIGNUP
-// ======================
+// =====================
 
 export const signUp = async (req, res) => {
   try {
