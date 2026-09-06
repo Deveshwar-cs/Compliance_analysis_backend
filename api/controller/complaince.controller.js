@@ -150,7 +150,11 @@ Return ONLY valid JSON, no markdown fences:
 
 const getRelevantControls = (framework, product, searchResults) => {
   const normalize = (id) => String(id).trim().toUpperCase();
-
+  console.log(framework.controls);
+  console.log("FRAMEWORK INDUSTRY");
+  console.log(framework.industry);
+  console.log("product:::-");
+  console.log(product);
   const ruleBasedControls = framework.controls.filter((c) => {
     const typeMatch =
       !c.productTypes?.length || c.productTypes.includes(product.productType);
@@ -158,6 +162,8 @@ const getRelevantControls = (framework, product, searchResults) => {
       !c.industries?.length || c.industries.includes(framework.industry);
     return typeMatch && industryMatch;
   });
+  console.log("RULE BASED CONTROLS");
+  console.log(ruleBasedControls);
 
   const vectorControls = searchResults
     .filter(
@@ -173,7 +179,8 @@ const getRelevantControls = (framework, product, searchResults) => {
       riskLevel: r.payload.riskLevel,
       weight: Number(r.payload.weight || 10),
     }));
-
+  console.log("VECTOR CONTROLS");
+  console.log(vectorControls);
   const merged = new Map();
   [...ruleBasedControls, ...vectorControls].forEach((c) => {
     if (c.controlId) merged.set(normalize(c.controlId), c);
@@ -254,7 +261,6 @@ export const analyzeCompliance = async (req, res) => {
 
     if (!product) return res.status(404).json({error: "Product not found"});
     if (!framework) return res.status(404).json({error: "Framework not found"});
-
     const productText = buildProductText(product);
     const productVector = await generateEmbedding(productText);
 
@@ -269,7 +275,8 @@ export const analyzeCompliance = async (req, res) => {
       product,
       searchResults,
     );
-
+    console.log("relevant controls");
+    console.log(relevantControls);
     if (!relevantControls.length) {
       return res.status(400).json({
         error:
@@ -281,7 +288,7 @@ export const analyzeCompliance = async (req, res) => {
       messages: [
         {role: "user", content: buildPrompt(productText, relevantControls)},
       ],
-      model: "llama-3.3-70b-versatile",
+      model: "openai/gpt-oss-120b",
       temperature: 0.15,
       max_tokens: 4096,
       response_format: {type: "json_object"},

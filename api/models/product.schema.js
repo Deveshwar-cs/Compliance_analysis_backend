@@ -35,7 +35,7 @@ const productSchema = new mongoose.Schema(
         "medical_device",
         "software",
         "ai_system",
-        "diagonistic",
+        "diagnostic",
         "other",
       ],
     },
